@@ -68,7 +68,6 @@ class CategoryTest extends TestCase
 
         $response->assertSuccessful();
         $response->assertHeader('content-type', 'application/json');
-        $this->assertDeleted($category);
     }
 
 }

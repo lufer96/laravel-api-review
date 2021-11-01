@@ -3,8 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
@@ -21,8 +23,17 @@ class ProductTest extends TestCase
         $response->assertStatus(200);
     }
 
+    protected function setUp() : void
+    {
+        parent::setUp();
+        $user = User::factory(1)->create();
+        Sanctum::actingAs(
+            $user[0]
+        );
+    }
     public function text_index()
     {
+
         Product::factory(5)->create();
 
         $response = $this->getJson('/api/products');
@@ -47,6 +58,7 @@ class ProductTest extends TestCase
 
     public function test_update_product()
     {
+
         /** @var Product $product */
         $product = Product::factory(1)->create();
 
@@ -62,6 +74,7 @@ class ProductTest extends TestCase
 
     public function test_show_product()
     {
+
         /** @var Product $product */
         $product = Product::factory(1)->create();
 
@@ -72,6 +85,7 @@ class ProductTest extends TestCase
 
     public function test_delete_product()
     {
+
         /** @var Product $product */
         $product = Product::factory(1)->create();
 
